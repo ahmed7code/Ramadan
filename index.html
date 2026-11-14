@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشكاة | الداش بورد الرمضاني</title>
+    <!-- خط القاهرة العربي -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    <!-- مكتبة الأيقونات Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+    <!-- شريط علوي يظهر فقط في الجوال والتابلت -->
+    <div class="mobile-header">
+        <div class="mobile-brand">
+            <i class='bx bxs-moon'></i>
+            <h2>مشكاة <span>رمضان</span></h2>
+        </div>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="القائمة">
+            <i class='bx bx-menu'></i>
+        </button>
+    </div>
+
+    <!-- طبقة التعتيم خلف القائمة في الجوال -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <div class="dashboard-container">
+        <!-- ================= السايد بار ================= -->
+        <aside class="sidebar">
+            <!-- 1. قسم البراند -->
+            <div class="brand">
+                <i class='bx bxs-moon'></i>
+                <h2>مشكاة <span>رمضان</span></h2>
+            </div>
+
+            <!-- 2. قسم الروابط (10 أقسام) -->
+            <nav class="nav-links">
+                <a href="#" class="active" data-target="home"><i class='bx bxs-dashboard'></i> الرئيسية</a>
+                <a href="#" data-target="prayers">
+                    <svg xmlns="http://w3.org" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 2C11.4 2 11 2.4 11 3V4.1C8.8 4.6 7 6.5 7 9V11H5V21H10V16C10 14.9 10.9 14 12 14C13.1 14 14 14.9 14 16V21H19V11H17V9C17 6.5 15.2 4.6 13 4.1V3C13 2.4 12.6 2 12 2ZM3 9C2.4 9 2 9.4 2 10V21H4V10C4 9.4 3.6 9 3 9ZM21 9C20.4 9 20 9.4 20 10V21H22V10C22 9.4 21.6 9 21 9Z" />
+                    </svg>
+                    الصلوات الخمس
+                </a>
+                <a href="#" data-target="quran"><i class='bx bxs-book-open'></i> الختمة والقرآن</a>
+                <a href="#" data-target="athkar"><i class='bx bxs-heart'></i> الأذكار والتسبيح</a>
+                <a href="#" data-target="tasks"><i class='bx bx-list-check'></i> المهام اليومية</a>
+                <a href="#" data-target="habits"><i class='bx bx-target-lock'></i> تحدي العادات</a>
+                <a href="#" data-target="duaa"><i class='bx bxs-star'></i> الدعاء والأمنيات</a>
+                <a href="#" data-target="charity"><i class='bx bxs-donate-heart'></i> المالية والصدقات</a>
+                <a href="#" data-target="health"><i class='bx bx-run'></i> الصحة والرياضة</a>
+                <a href="#" data-target="stats"><i class='bx bxs-bar-chart-alt-2'></i> الإحصائيات</a>
+            </nav>
+
+            <!-- 3. قسم الإعدادات والمظهر (20 لون) -->
+            <div class="theme-settings">
+                <p><i class='bx bxs-palette'></i> مظهر الموقع (20 لون)</p>
+                <div class="colors-grid" id="colors-grid">
+                    <!-- يتم توليد الألوان الـ 20 تلقائياً عبر الجافاسكريبت -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- ================= مساحة المحتوى الرئيسية ================= -->
+        <main class="main-content">
+            <section id="home" class="content-section active">
+                <!-- 1. ترويسة الترحيب -->
+                <div class="section-header">
+                    <div>
+                        <h1>أهلاً بك في <span>مشكاة رمضان</span></h1>
+                        <p>استعد للشهر الفضيل وتابع عباداتك وإنجازاتك اليومية بكل سهولة.</p>
+                    </div>
+                    <div class="date-badge" id="today-date">
+                        <i class='bx bx-calendar'></i>
+                        <span>جاري تحميل التاريخ...</span>
+                    </div>
+                </div>
+
+                <!-- 2. بطاقة العد التنازلي -->
+                <div class="countdown-banner">
+                    <div class="countdown-info">
+                        <span class="badge">العد التنازلي</span>
+                        <h2>المتبقي على شهر رمضان المبارك.</h2>
+                        <p>اللهم بلغنا رمضان لا فاقدين ولا مفقودين</p>
+                    </div>
+                    <div class="countdown-boxes">
+                        <div class="time-box">
+                            <span id="days">00</span>
+                            <p>يوم</p>
+                        </div>
+                        <div class="time-box">
+                            <span id="hours">00</span>
+                            <p>ساعة</p>
+                        </div>
+                        <div class="time-box">
+                            <span id="minutes">00</span>
+                            <p>دقيقة</p>
+                        </div>
+                        <div class="time-box">
+                            <span id="seconds">00</span>
+                            <p>ثانية</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. كروت الملخص اليومي -->
+                <div class="summary-grid">
+                    <!-- كرت الصلوات -->
+                    <div class="summary-card">
+                        <div class="card-icon">
+                            <i class='bx bxs-check-shield'></i>
+                        </div>
+                        <div class="card-details">
+                            <h3>الصلوات المفروضة</h3>
+                            <p class="card-value" id="home-prayers-count">0 / 5</p>
+                            <span class="card-sub">صلوات اليوم</span>
+                        </div>
+                    </div>
+
+                    <!-- كرت القرآن -->
+                    <div class="summary-card">
+                        <div class="card-icon">
+                            <i class='bx bxs-book-open'></i>
+                        </div>
+                        <div class="card-details">
+                            <h3>ختمة القرآن</h3>
+                            <p class="card-value" id="home-quran-progress">0%</p>
+                            <span class="card-sub">نسبة الإنجاز</span>
+                        </div>
+                    </div>
+
+                    <!-- كرت التسبيح -->
+                    <div class="summary-card">
+                        <div class="card-icon">
+                            <i class='bx bxs-heart'></i>
+                        </div>
+                        <div class="card-details">
+                            <h3>مجموع الأذكار</h3>
+                            <p class="card-value" id="home-athkar-count">0</p>
+                            <span class="card-sub">تسبيحة اليوم</span>
+                        </div>
+                    </div>
+
+                    <!-- كرت المهام -->
+                    <div class="summary-card">
+                        <div class="card-icon">
+                            <i class='bx bx-list-check'></i>
+                        </div>
+                        <div class="card-details">
+                            <h3>المهام اليومية</h3>
+                            <p class="card-value" id="home-tasks-count">0 / 0</p>
+                            <span class="card-sub">مهام منجزة</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="prayers" class="content-section">
+                <!-- ترويسة القسم -->
+                <div class="section-header">
+                    <div>
+                        <h1>متابعة <span>الصلوات الخمس</span></h1>
+                        <p>حافظ على صلواتك في وقتها وتابع التزامك اليومي خطوة بخطوة.</p>
+                    </div>
+                    <button class="reset-btn" id="reset-prayers-btn">
+                        <i class='bx bx-refresh'></i> تصفير صلوات اليوم
+                    </button>
+                </div>
+
+                <!-- شريط التقدم للصلوات المفروضة -->
+                <div class="prayer-progress-card">
+                    <div class="progress-header">
+                        <span>إنجاز الفروض اليومية</span>
+                        <span id="prayer-percentage">0% (0 / 5)</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="prayer-progress-fill"></div>
+                    </div>
+                </div>
+
+                <!-- شبكة الصلوات الخمس المفروضة -->
+                <h2 class="sub-heading"><i class='bx bxs-star'></i> الصلوات المفروضة</h2>
+                <div class="prayers-grid">
+                    <!-- الفجر -->
+                    <div class="prayer-card" data-prayer="fajr">
+                        <div class="prayer-info">
+                            <div class="prayer-icon"><i class='bx bx-sun'></i></div>
+                            <div>
+                                <h3>صلاة الفجر</h3>
+                                <span>ركعتان فرض</span>
+                            </div>
+                        </div>
+                        <div class="prayer-check">
+                            <i class='bx bx-check'></i>
+                        </div>
+                    </div>
+
+                    <!-- الظهر -->
+                    <div class="prayer-card" data-prayer="dhuhr">
+                        <div class="prayer-info">
+                            <div class="prayer-icon"><i class='bx bxs-sun'></i></div>
+                            <div>
+                                <h3>صلاة الظهر</h3>
+                                <span>4 ركعات فرض</span>
+                            </div>
+                        </div>
+                        <div class="prayer-check">
+                            <i class='bx bx-check'></i>
+                        </div>
+                    </div>
+
+                    <!-- العصر -->
+                    <div class="prayer-card" data-prayer="asr">
+                        <div class="prayer-info">
+                            <div class="prayer-icon"><i class='bx bx-cloud'></i></div>
+                            <div>
+                                <h3>صلاة العصر</h3>
+                                <span>4 ركعات فرض</span>
+                            </div>
+                        </div>
+                        <div class="prayer-check">
+                            <i class='bx bx-check'></i>
+                        </div>
+                    </div>
+
+                    <!-- المغرب -->
+                    <div class="prayer-card" data-prayer="maghrib">
+                        <div class="prayer-info">
+                            <div class="prayer-icon"><i class='bx bxs-moon'></i></div>
+                            <div>
+                                <h3>صلاة المغرب</h3>
+                                <span>3 ركعات فرض</span>
+                            </div>
+                        </div>
+                        <div class="prayer-check">
+                            <i class='bx bx-check'></i>
+                        </div>
+                    </div>
+
+                    <!-- العشاء -->
+                    <div class="prayer-card" data-prayer="isha">
+                        <div class="prayer-info">
+                            <div class="prayer-icon"><i class='bx bx-moon'></i></div>
+                            <div>
+                                <h3>صلاة العشاء</h3>
+                                <span>4 ركعات فرض</span>
+                            </div>
+                        </div>
+                        <div class="prayer-check">
+                            <i class='bx bx-check'></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- شبكة السنن والنوافل -->
+                <h2 class="sub-heading"><i class='bx bxs-heart'></i> السنن والنوافل</h2>
+                <div class="prayers-grid sunnah-grid">
+                    <div class="prayer-card sunnah-card" data-sunnah="rawatib">
+                        <div class="prayer-info">
+                            <div class="prayer-icon"><i class='bx bx-bookmark-heart'></i></div>
+                            <div>
+                                <h3>السنن الرواتب</h3>
+                                <span>12 ركعة في اليوم والليلة</span>
+                            </div>
+                        </div>
+                        <div class="prayer-check"><i class='bx bx-check'></i></div>
+                    </div>
+
+                    <div class="prayer-card sunnah-card" data-sunnah="duha">
+                        <div class="prayer-info">
+                            <div class="prayer-icon"><i class='bx bx-brightness'></i></div>
+                            <div>
+                                <h3>صلاة الضحى</h3>
+                                <span>صلاة الأوابين (ركعتان أو أكثر)</span>
+                            </div>
+                        </div>
+                        <div class="prayer-check"><i class='bx bx-check'></i></div>
+                    </div>
+
+                    <div class="prayer-card sunnah-card" data-sunnah="witr">
+                        <div class="prayer-info">
+                            <div class="prayer-icon"><i class='bx bxs-star-half'></i></div>
+                            <div>
+                                <h3>قيام الليل والوتر</h3>
+                                <span>ختام صلاة الليل</span>
+                            </div>
+                        </div>
+                        <div class="prayer-check"><i class='bx bx-check'></i></div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="quran" class="content-section">
+                <!-- 1. ترويسة القسم -->
+                <div class="section-header">
+                    <div>
+                        <h1>الختمة <span>والقرآن الكريم</span></h1>
+                        <p>اقرأ وردك اليومي مباشرة وتابع تقدمك نحو إتمام الختمة.</p>
+                    </div>
+                    <button class="reset-btn" id="reset-quran-btn">
+                        <i class='bx bx-refresh'></i> ختمة جديدة (تصفير)
+                    </button>
+                </div>
+
+                <!-- 2. شريط تقدم الختمة -->
+                <div class="prayer-progress-card">
+                    <div class="progress-header">
+                        <span>تقدم الختمة الحالية</span>
+                        <span id="quran-percentage">0% (0 / 114 سورة)</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="quran-progress-fill"></div>
+                    </div>
+                </div>
+
+                <!-- 3. واجهة قائمة السور (تظهر افتراضياً) -->
+                <div id="surahs-list-view">
+                    <div class="quran-search-box">
+                        <i class='bx bx-search'></i>
+                        <input type="text" id="surah-search-input"
+                            placeholder="ابحث عن اسم السورة (مثلاً: الفاتحة، الكهف، الملك)...">
+                    </div>
+
+                    <div class="surahs-grid" id="surahs-grid">
+                        <!-- يتم جلب الـ 114 سورة تلقائياً بالجافاسكريبت -->
+                        <p class="loading-text">جاري تحميل سور القرآن الكريم...</p>
+                    </div>
+                </div>
+
+                <!-- 4. واجهة قراءة السورة (تظهر عند الضغط على أي سورة) -->
+                <div id="surah-reader-view" class="surah-reader" style="display: none;">
+                    <div class="reader-top-bar">
+                        <div class="quran-audio-player">
+                            <div class="reciter-selector-box">
+                                <i class='bx bx-microphone'></i>
+                                <select id="reciter-select" class="dhikr-select">
+                                    <option value="">جاري تحميل قائمة القراء...</option>
+                                </select>
+                            </div>
+                            <audio id="surah-audio" controls preload="none"></audio>
+                        </div>
+
+                        <button class="back-btn" id="back-to-surahs-btn">
+                            <i class='bx bx-right-arrow-alt'></i> العودة لقائمة السور
+                        </button>
+                        <div class="reader-title">
+                            <h2 id="reader-surah-name">سورة الفاتحة</h2>
+                            <span id="reader-surah-info">مكية • 7 آيات</span>
+                        </div>
+                        <button class="mark-read-btn" id="toggle-surah-read-btn">
+                            <i class='bx bx-check-circle'></i> تحديد كمقروءة
+                        </button>
+                    </div>
+
+                    <!-- البسملة -->
+                    <div class="bismillah" id="bismillah-header">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+
+                    <!-- نص الآيات -->
+                    <div class="ayahs-container" id="ayahs-container">
+                        <p class="loading-text">جاري تحميل الآيات...</p>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="athkar" class="content-section">
+                <!-- ترويسة القسم -->
+                <div class="section-header">
+                    <div>
+                        <h1>الأذكار <span>والتسبيح</span></h1>
+                        <p>ألا بذكر الله تطمئن القلوب — سبّح وتابع وردك اليومي من الأذكار.</p>
+                    </div>
+                    <button class="reset-btn" id="reset-all-athkar-btn">
+                        <i class='bx bx-refresh'></i> تصفير مجموع اليوم
+                    </button>
+                </div>
+
+                <!-- قسم المسبحة الإلكترونية -->
+                <div class="tasbih-container">
+                    <div class="tasbih-card">
+                        <div class="tasbih-top">
+                            <select id="dhikr-select" class="dhikr-select">
+                                <option value="سبحان الله">سبحان الله</option>
+                                <option value="الحمد لله">الحمد لله</option>
+                                <option value="لا إله إلا الله">لا إله إلا الله</option>
+                                <option value="الله أكبر">الله أكبر</option>
+                                <option value="أستغفر الله وأتوب إليه">أستغفر الله وأتوب إليه</option>
+                                <option value="اللهم صلِّ وسلم على نبينا محمد">اللهم صلِّ وسلم على نبينا محمد</option>
+                            </select>
+                            <span class="total-badge">مجموع اليوم: <strong id="athkar-daily-total">0</strong></span>
+                        </div>
+
+                        <div class="tasbih-display">
+                            <p id="current-dhikr-text">سبحان الله</p>
+                            <div class="tasbih-counter-num" id="tasbih-count">0</div>
+                        </div>
+
+                        <div class="tasbih-actions">
+                            <button class="tasbih-btn-main" id="tasbih-increment-btn">
+                                <i class='bx bx-plus'></i> سبّح الآن
+                            </button>
+                            <button class="tasbih-btn-reset" id="tasbih-reset-btn" title="تصفير العداد الحالي">
+                                <i class='bx bx-rotate-left'></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بطاقات الأذكار اليومية -->
+                <h2 class="sub-heading"><i class='bx bxs-book-heart'></i> أذكار مختارة (اضغط للعد)</h2>
+                <div class="athkar-cards-grid" id="athkar-cards-grid">
+                    <!-- تتولد تلقائياً بالجافاسكريبت -->
+                </div>
+            </section>
+
+            <section id="tasks" class="content-section">
+                <!-- ترويسة القسم -->
+                <div class="section-header">
+                    <div>
+                        <h1>المهام <span>اليومية</span></h1>
+                        <p>نظم وقتك بين العبادة، الدراسة، والبرمجة وأنجز أهدافك خطوة بخطوة.</p>
+                    </div>
+                    <button class="reset-btn" id="clear-completed-tasks-btn">
+                        <i class='bx bx-trash'></i> حذف المهام المنجزة
+                    </button>
+                </div>
+
+                <!-- نموذج إضافة مهمة جديدة -->
+                <form class="task-form" id="task-form">
+                    <input type="text" id="task-input"
+                        placeholder="اكتب مهمتك الجديدة هنا (مثلاً: مراجعة كود React، بر الوالدة)..." required>
+                    <select id="task-category">
+                        <option value="عبادة">🕌 عبادة</option>
+                        <option value="برمجة">💻 برمجة</option>
+                        <option value="دراسة">📚 دراسة</option>
+                        <option value="شخصي">✨ شخصي</option>
+                    </select>
+                    <button type="submit" class="add-task-btn">
+                        <i class='bx bx-plus'></i> إضافة
+                    </button>
+                </form>
+
+                <!-- أزرار الفلترة -->
+                <div class="tasks-filters">
+                    <button class="filter-btn active" data-filter="all">الكل (<span id="count-all">0</span>)</button>
+                    <button class="filter-btn" data-filter="pending">قيد التنفيذ (<span
+                            id="count-pending">0</span>)</button>
+                    <button class="filter-btn" data-filter="completed">المنجزة (<span
+                            id="count-completed">0</span>)</button>
+                </div>
+
+                <!-- قائمة المهام -->
+                <div class="tasks-list" id="tasks-list">
+                    <!-- تتولد المهام هنا تلقائياً بالجافاسكريبت -->
+                </div>
+            </section>
+
+            <section id="habits" class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h1>تحدي <span>العادات (30 يوم)</span></h1>
+                        <p class="description">ابنِ عادات إيجابية طوال أيام الشهر الفضيل وتابع التزامك يوماً بيوم.</p>
+                    </div>
+                    <button class="reset-btn" id="reset-habits-btn">
+                        <i class="bx bx-refresh"></i> تصفير الايام
+                    </button>
+                </div>
+
+                <form class="task-form" id="habit-form">
+                    <input type="text" id="habit-input"
+                        placeholder="أضف عادة جديدة لتحدي الـ 30 يوم (مثلاً: بر الوالدة، شرب 8 أكواب ماء)..." required>
+                    <button type="submit" class="add-task-btn">
+                        <i class='bx bx-plus'></i> إضافة عادة
+                    </button>
+                </form>
+
+                <!-- قائمة العادات وشبكة الـ 30 يوم -->
+                <div class="habits-container" id="habits-container">
+                    <!-- تتولد العادات هنا تلقائياً بالجافاسكريبت -->
+                </div>
+            </section>
+
+            <section id="duaa" class="content-section">
+                <!-- ترويسة القسم -->
+                <div class="section-header">
+                    <div>
+                        <h1>قائمة <span>الدعاء والأمنيات</span></h1>
+                        <p>اكتب دعواتك وأمنياتك وألحّ بها على الله في أوقات الإجابة.</p>
+                    </div>
+                    <div class="date-badge">
+                        <i class='bx bxs-moon'></i>
+                        <span>وقت الإجابة: عند الإفطار وفي الثلث الأخير</span>
+                    </div>
+                </div>
+
+                <!-- نموذج إضافة دعاء أو أمنية -->
+                <form class="task-form" id="duaa-form">
+                    <input type="text" id="duaa-input"
+                        placeholder="اكتب دعاءك أو أمنيتك هنا (مثلاً: اللهم بارك لي في أهلي ودراستي وزواجي)..."
+                        required>
+                    <select id="duaa-category">
+                        <option value="لنفسي ومستقبلي">🌟 لنفسي ومستقبلي</option>
+                        <option value="للوالدين والأهل">❤️ للوالدين والأهل</option>
+                        <option value="للرزق والتوفيق">💼 للرزق والتوفيق</option>
+                        <option value="جوامع الدعاء">🤲 جوامع الدعاء</option>
+                    </select>
+                    <button type="submit" class="add-task-btn">
+                        <i class='bx bx-plus'></i> حفظ الدعاء
+                    </button>
+                </form>
+
+                <!-- شبكة بطاقات الأدعية -->
+                <div class="duaa-grid" id="duaa-grid">
+                    <!-- تتولد البطاقات تلقائياً بالجافاسكريبت -->
+                </div>
+            </section>
+
+            <section id="charity" class="content-section">
+                <!-- ترويسة القسم -->
+                <div class="section-header">
+                    <div>
+                        <h1>المالية <span>والصدقات</span></h1>
+                        <p>ما نقص مال من صدقة — تابع صدقاتك اليومية وميزانية شهرك بذكاء.</p>
+                    </div>
+                    <button class="reset-btn" id="set-budget-btn">
+                        <i class='bx bx-wallet'></i> تحديد الميزانية الشهرية
+                    </button>
+                </div>
+
+                <!-- كروت ملخص المالية والصدقات -->
+                <div class="summary-grid" style="margin-bottom: 2.5rem;">
+                    <div class="summary-card">
+                        <div class="card-icon"><i class='bx bxs-donate-heart'></i></div>
+                        <div class="card-details">
+                            <h3>إجمالي الصدقات</h3>
+                            <p class="card-value" id="total-charity-amount">0 ريال</p>
+                            <span class="card-sub">في ميزان حسناتك</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="card-icon"><i class='bx bx-money'></i></div>
+                        <div class="card-details">
+                            <h3>الميزانية الشهرية</h3>
+                            <p class="card-value" id="monthly-budget-amount">1000 ريال</p>
+                            <span class="card-sub">الحد المخصص للشهر</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="card-icon"><i class='bx bx-pie-chart-alt-2'></i></div>
+                        <div class="card-details">
+                            <h3>المتبقي من الميزانية</h3>
+                            <p class="card-value" id="remaining-budget-amount">1000 ريال</p>
+                            <span class="card-sub">بعد الصدقات والمصاريف</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- نموذج إضافة صدقة أو مصروف -->
+                <form class="task-form" id="finance-form">
+                    <input type="text" id="finance-title"
+                        placeholder="الوصف (مثلاً: صدقة يومية، تفطير صائم، أغراض البيت)..." required>
+                    <input type="number" id="finance-amount" placeholder="المبلغ (ريال)" min="1" step="any"
+                        style="max-width: 16rem;" required>
+                    <select id="finance-type">
+                        <option value="charity">💚 صدقة</option>
+                        <option value="expense">💸 مصروف</option>
+                    </select>
+                    <button type="submit" class="add-task-btn">
+                        <i class='bx bx-plus'></i> تسجيل
+                    </button>
+                </form>
+
+                <!-- سجل العمليات المالية -->
+                <div class="tasks-list" id="finance-list">
+                    <!-- تتولد العمليات هنا تلقائياً بالجافاسكريبت -->
+                </div>
+            </section>
+
+
+            <section id="health" class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h1>الصحة <span>والرياضة</span></h1>
+                        <p class="description">اهتم بصحتك ونشاطك البدني في رمضان وتابع شرب الماء، التمارين، وجودة نومك.
+                        </p>
+                    </div>
+                    <button class="reset-btn" id="reset-health-btn">
+                        <i class='bx bx-refresh'></i> تصفير بيانات اليوم
+                    </button>
+                </div>
+
+                <!-- شبكة متابعة الماء والنوم -->
+                <div class="health-top-grid">
+                    <!-- بطاقة شرب الماء -->
+                    <div class="health-card">
+                        <div class="health-card-header">
+                            <div class="health-title">
+                                <i class='bx bx-droplet'></i>
+                                <h3>متابعة شرب الماء</h3>
+                            </div>
+                            <span class="health-badge" id="water-badge">0 / 8 أكواب</span>
+                        </div>
+
+                        <div class="water-cups-grid" id="water-cups-grid">
+                            <!-- يتم توليد 8 أكواب تلقائياً عبر الجافاسكربت -->
+                        </div>
+
+                        <div class="health-controls">
+                            <button class="health-action-btn" id="add-water-btn">
+                                <i class='bx bx-plus'></i> شربت كوب ماء
+                            </button>
+                            <button class="health-secondary-btn" id="remove-water-btn" title="إنقاص كوب">
+                                <i class='bx bx-minus'></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- بطاقة جودة النوم والطاقة -->
+                    <div class="health-card">
+                        <div class="health-card-header">
+                            <div class="health-title">
+                                <i class='bx bx-moon'></i>
+                                <h3>ساعات النوم والطاقة</h3>
+                            </div>
+                            <span class="health-badge" id="sleep-status-badge">لم يُحدد</span>
+                        </div>
+
+                        <div class="sleep-input-group">
+                            <label for="sleep-hours-input">كم ساعة نمت اليوم؟</label>
+                            <div class="sleep-counter-box">
+                                <button class="health-secondary-btn" id="decrease-sleep-btn"><i
+                                        class='bx bx-minus'></i></button>
+                                <span id="sleep-hours-display">7</span>
+                                <button class="health-secondary-btn" id="increase-sleep-btn"><i
+                                        class='bx bx-plus'></i></button>
+                            </div>
+                        </div>
+
+                        <div class="energy-levels">
+                            <p>مستوى نشاطك اليوم:</p>
+                            <div class="energy-btns" id="energy-btns">
+                                <button class="energy-btn" data-energy="عالي 🔥">عالي 🔥</button>
+                                <button class="energy-btn" data-energy="متوسط ⚡">متوسط ⚡</button>
+                                <button class="energy-btn" data-energy="منخفض 😴">منخفض 😴</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قسم تسجيل التمارين والنشاط الرياضي -->
+                <h2 class="sub-heading"><i class='bx bx-run'></i> سجل التمارين والنشاط البدني</h2>
+
+                <form class="task-form" id="workout-form">
+                    <input type="text" id="workout-name"
+                        placeholder="اسم التمرين (مثلاً: مشي سريع قبل الإفطار، مقاومة...)" required>
+                    <input type="number" id="workout-duration" placeholder="المدة (بالدقائق)" min="1" max="300"
+                        required>
+                    <select id="workout-time">
+                        <option value="قبل الإفطار">🌅 قبل الإفطار</option>
+                        <option value="بعد التراويح">🌙 بعد التراويح</option>
+                        <option value="بعد الفجر">☀️ بعد الفجر</option>
+                    </select>
+                    <button type="submit" class="add-task-btn">
+                        <i class='bx bx-plus'></i> إضافة تمرين
+                    </button>
+                </form>
+
+                <div class="tasks-list" id="workouts-list">
+                    <!-- تظهر التمارين المسجلة هنا -->
+                </div>
+            </section>
+
+            <section id="stats" class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h1>الإحصائيات <span>والتقارير</span></h1>
+                        <p class="description">نظرة شاملة وفخمة على حصادك وإنجازاتك في جميع جوانب شهر رمضان المبارك.</p>
+                    </div>
+                    <button class="reset-btn" id="refresh-stats-btn">
+                        <i class='bx bx-sync'></i> تحديث الإحصائيات
+                    </button>
+                </div>
+
+                <!-- بطاقة التقييم العام الفخمة (Hero Score Card) -->
+                <div class="stats-hero-card lux-card">
+                    <div class="spotlight-glow"></div>
+                    <div class="hero-score-info">
+                        <span class="lux-badge"><i class='bx bxs-crown'></i> مؤشر الإنجاز العام</span>
+                        <h2 id="overall-rank-title">بداية موفقة يا بطل ✨</h2>
+                        <p id="overall-rank-desc">استمر في المحافظة على صلواتك ووردك اليومي لترتقي في مستويات الإنجاز.
+                        </p>
+
+                        <div class="hero-mini-stats">
+                            <div class="mini-stat-pill">
+                                <i class='bx bxs-flame'></i>
+                                <span>أيام العادات المنجزة: <strong id="stat-total-habits">0</strong> يوم</span>
+                            </div>
+                            <div class="mini-stat-pill">
+                                <i class='bx bxs-heart'></i>
+                                <span>أدعية رددتها: <strong id="stat-total-duaa">0</strong> مرة</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- الحلقة الدائرية الكبرى -->
+                    <div class="circular-progress-box large">
+                        <svg viewBox="0 0 120 120">
+                            <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+                            <circle class="ring-fill" id="overall-ring" cx="60" cy="60" r="52"></circle>
+                        </svg>
+                        <div class="ring-text">
+                            <span class="counter-num" id="overall-score-num" data-target="0">0</span><small>%</small>
+                            <p>الإنجاز الكلي</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- شبكة الكروت المودرن (6 بطاقات تفاعلية) -->
+                <div class="lux-stats-grid">
+                    <!-- 1. إحصائية الصلوات -->
+                    <div class="lux-card">
+                        <div class="spotlight-glow"></div>
+                        <div class="lux-card-top">
+                            <div class="lux-icon"><svg viewBox="0 0 100 100">
+                                    <circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+                                    <circle class="ring-fill" id="stat-prayers-ring" cx="50" cy="50" r="42"></circle>
+                                </svg></div>
+                            <span class="lux-tag">العبادات</span>
+                        </div>
+                        <div class="lux-card-body">
+                            <div class="circular-progress-box">
+                                <svg viewBox="0 0 100 100">
+                                    <circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+                                    <circle class="ring-fill" id="stat-prayers-ring" cx="50" cy="50" r="42"></circle>
+                                </svg>
+                                <div class="ring-text">
+                                    <span class="counter-num" id="stat-prayers-pct"
+                                        data-target="0">0</span><small>%</small>
+                                </div>
+                            </div>
+                            <div class="lux-details">
+                                <h3>الصلوات والسنن</h3>
+                                <p id="stat-prayers-sub">0 من 8 صلوات وسنن اليوم</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. إحصائية ختمة القرآن -->
+                    <div class="lux-card">
+                        <div class="spotlight-glow"></div>
+                        <div class="lux-card-top">
+                            <div class="lux-icon"><i class='bx bxs-book-open'></i></div>
+                            <span class="lux-tag">القرآن الكريم</span>
+                        </div>
+                        <div class="lux-card-body">
+                            <div class="circular-progress-box">
+                                <svg viewBox="0 0 100 100">
+                                    <circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+                                    <circle class="ring-fill" id="stat-quran-ring" cx="50" cy="50" r="42"></circle>
+                                </svg>
+                                <div class="ring-text">
+                                    <span class="counter-num" id="stat-quran-pct"
+                                        data-target="0">0</span><small>%</small>
+                                </div>
+                            </div>
+                            <div class="lux-details">
+                                <h3>تقدم الختمة</h3>
+                                <p id="stat-quran-sub">0 من 114 سورة مقروءة</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. إحصائية الأذكار -->
+                    <div class="lux-card">
+                        <div class="spotlight-glow"></div>
+                        <div class="lux-card-top">
+                            <div class="lux-icon"><i class='bx bxs-analyse'></i></div>
+                            <span class="lux-tag">الذكر</span>
+                        </div>
+                        <div class="lux-card-number-box">
+                            <h4 class="big-stat-num counter-num" id="stat-athkar-num" data-target="0">0</h4>
+                            <span>تسبيحة وذكر اليوم</span>
+                        </div>
+                        <div class="lux-bar-wrapper">
+                            <div class="lux-bar-fill" id="stat-athkar-bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- 4. إحصائية المهام اليومية -->
+                    <div class="lux-card">
+                        <div class="spotlight-glow"></div>
+                        <div class="lux-card-top">
+                            <div class="lux-icon"><i class='bx bxs-check-square'></i></div>
+                            <span class="lux-tag">الإنتاجية</span>
+                        </div>
+                        <div class="lux-card-body">
+                            <div class="circular-progress-box">
+                                <svg viewBox="0 0 100 100">
+                                    <circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+                                    <circle class="ring-fill" id="stat-tasks-ring" cx="50" cy="50" r="42"></circle>
+                                </svg>
+                                <div class="ring-text">
+                                    <span class="counter-num" id="stat-tasks-pct"
+                                        data-target="0">0</span><small>%</small>
+                                </div>
+                            </div>
+                            <div class="lux-details">
+                                <h3>إنجاز المهام</h3>
+                                <p id="stat-tasks-sub">0 من 0 مهام مكتملة</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. إحصائية الصدقات والمالية -->
+                    <div class="lux-card">
+                        <div class="spotlight-glow"></div>
+                        <div class="lux-card-top">
+                            <div class="lux-icon"><i class='bx bxs-donate-heart'></i></div>
+                            <span class="lux-tag">العطاء</span>
+                        </div>
+                        <div class="lux-card-number-box">
+                            <h4 class="big-stat-num"><span class="counter-num" id="stat-charity-num"
+                                    data-target="0">0</span> <small>ريال</small></h4>
+                            <span id="stat-budget-sub">المتبقي من الميزانية: 1000 ريال</span>
+                        </div>
+                        <div class="lux-bar-wrapper">
+                            <div class="lux-bar-fill" id="stat-charity-bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- 6. إحصائية الصحة والرياضة -->
+                    <div class="lux-card">
+                        <div class="spotlight-glow"></div>
+                        <div class="lux-card-top">
+                            <div class="lux-icon"><i class='bx bxs-heart-circle'></i></div>
+                            <span class="lux-tag">الصحة واللياقة</span>
+                        </div>
+                        <div class="lux-card-number-box">
+                            <h4 class="big-stat-num"><span class="counter-num" id="stat-workout-mins"
+                                    data-target="0">0</span> <small>دقيقة</small></h4>
+                            <span id="stat-water-sub">شرب الماء: 0 / 8 أكواب</span>
+                        </div>
+                        <div class="lux-bar-wrapper">
+                            <div class="lux-bar-fill" id="stat-water-bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="./js/app.js"></script>
+</body>
+
+</html>
